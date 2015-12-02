@@ -29,8 +29,8 @@ defmodule ConformExrm.Mixfile do
   #
   # Type "mix help deps" for more examples and options
   defp deps do
-    [{:exrm, "> 0.0.0", optional: true},
-     {:conform, "> 0.0.0", optional: true}]
+    [{:exrm, "> 0.0.0"},
+     {:conform, "> 0.0.0"}]
   end
 
   defp package do
