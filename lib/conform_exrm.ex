@@ -17,7 +17,7 @@ defmodule ReleaseManager.Plugin.Conform do
 
   def before_release(%Config{name: app, version: version}) do
     relx_conf_path = Utils.rel_file_dest_path("relx.config")
-    conf_src       = Path.join([File.cwd!, "config", "#{app}.conf"])
+    conf_src       = Path.join([File.cwd!, "config", "#{app}_#{Mix.env}.conf"])
 
     debug "Conform: Loading schema..."
     schema_src = Conform.Schema.schema_path(app)
