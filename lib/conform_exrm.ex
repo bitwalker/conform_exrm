@@ -42,7 +42,7 @@ defmodule ReleaseManager.Plugin.Conform do
 
       overlays = case File.exists?(conf_src) do
         true ->
-          [{:copy, '#{conf_src}', 'releases/#{version}/#{app}.conf'}|overlays]
+          [{:copy, '#{conf_src}', 'releases/#{version}/#{app}_#{Mix.env}.conf'}|overlays]
         false ->
           overlays
       end
