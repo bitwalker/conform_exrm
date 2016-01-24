@@ -15,9 +15,8 @@ defmodule ReleaseManager.Plugin.Conform do
   alias ReleaseManager.Config
   alias ReleaseManager.Utils
 
-  def before_release(%Config{name: app, version: version}) do
-    relx_conf_path = Utils.rel_file_dest_path("relx.config")
-    conf_src       = Path.join([File.cwd!, "config", "#{app}.conf"])
+  def before_release(%Config{name: app, version: version, relx_config: relx_config} = config) do
+    conf_src = Path.join([File.cwd!, "config", "#{app}.conf"])
 
     debug "Conform: Loading schema..."
     schema_src = Conform.Schema.schema_path(app)
@@ -54,13 +53,12 @@ defmodule ReleaseManager.Plugin.Conform do
 
       # Add .conf, .schema.exs, and escript to relx.config as overlays
       debug "Conform: Adding overlays to relx.config..."
-      relx_config = relx_conf_path |> Utils.read_terms
       updated = Utils.merge(relx_config, [overlay: overlays])
 
-      # Persist relx.config
-      Utils.write_terms(relx_conf_path, updated)
-
       debug "Conform: Done!"
+      %{config | :relx_config => updated}
+    else
+      config
     end
   end
 
