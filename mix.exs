@@ -3,7 +3,7 @@ defmodule ConformExrm.Mixfile do
 
   def project do
     [app: :conform_exrm,
-     version: "0.3.0",
+     version: "1.0.0",
      elixir: "~> 1.0",
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,

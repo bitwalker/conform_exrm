@@ -24,7 +24,7 @@ defmodule ReleaseManager.Plugin.Conform do
       # Define overlays for relx.config
       overlays = [{:copy, '#{schema_src}', 'releases/#{version}/#{app}.schema.exs'}]
       # generate archive
-      result = Mix.Task.run("conform.archive", ["#{schema_src}"])
+      result = Mix.Tasks.Conform.Archive.run(["#{schema_src}"])
       # add archive to the overlays
       overlays = case result do
         {_, _, []} ->
@@ -48,7 +48,7 @@ defmodule ReleaseManager.Plugin.Conform do
 
       # Generate escript for release
       debug "Conform: Generating escript.."
-      escript_path = Mix.Task.run("conform.release")
+      escript_path = Path.join(["#{:code.priv_dir(:conform)}", "bin", "conform"])
       overlays = [{:copy, '#{escript_path}', 'releases/#{version}/conform'}|overlays]
 
       # Add .conf, .schema.exs, and escript to relx.config as overlays
